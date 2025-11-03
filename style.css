@@ -1,0 +1,364 @@
+/* 基本設定與字體 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #ff4655; /* Valorant 紅色 */
+    --bg-color: #1a1a2e;      /* 深藍紫背景 */
+    --glass-color: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.2);
+    --text-color: #f0f0f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    padding-top: 80px; /* 留出 navbar 空間 */
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #fff;
+}
+
+ul {
+    list-style: none;
+}
+
+h2, h3 {
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+/* 液態玻璃 (Glassmorphism) 核心樣式 */
+.glass {
+    background: var(--glass-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+/* 導覽列 */
+nav.glass {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 100;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 1.5rem;
+}
+
+nav ul li a {
+    color: var(--text-color);
+    font-weight: 700;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+/* 導覽列連結底線動畫 */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* 主內容與頁面區塊 */
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-section {
+    display: none; /* 預設隱藏 */
+    animation: fadeIn 0.5s ease-in-out; /* 切換時的淡入動畫 */
+}
+
+.page-section.active {
+    display: block; /* 顯示當前頁面 */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 娛樂區 */
+.entertainment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.tool-card {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tool-card p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    min-height: 50px;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 按鈕風格 */
+button {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+button:hover {
+    background: #fff;
+    color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* 電腦分隊 */
+.splitter-container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+.splitter-input {
+    flex: 1;
+    min-width: 300px;
+}
+
+.splitter-results {
+    flex: 1.5;
+    display: flex;
+    gap: 1.5rem;
+    min-width: 300px;
+}
+
+.team-card {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+.team-card ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.team-card ul li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: 700;
+}
+
+textarea {
+    width: 100%;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: var(--text-color);
+    font-family: 'Noto Sans TC', sans-serif;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+
+#splitter-error {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+/* 關於我們 */
+.about-content {
+    padding: 2rem;
+}
+.about-content p {
+    margin-bottom: 1rem;
+}
+.about-content hr {
+    border: none;
+    height: 1px;
+    background: var(--border-color);
+    margin: 2rem 0;
+}
+
+/* 敬請期待 */
+.coming-soon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 4rem;
+}
+.page-section > p {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+/* 更新日誌 Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.modal-content ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+}
+
+#modal-confirm-btn {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* 背景動畫 - 漂浮的形狀 (增強 Liquid 風格) */
+.background-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0.1;
+    animation: float 20s infinite ease-in-out;
+}
+
+.shape1 {
+    width: 300px;
+    height: 300px;
+    top: -50px;
+    left: -50px;
+    animation-duration: 25s;
+}
+
+.shape2 {
+    width: 500px;
+    height: 500px;
+    bottom: -100px;
+    right: -100px;
+    background: #4a4aff; /* 另一種顏色 */
+    animation-duration: 30s;
+    animation-delay: -5s;
+}
+
+.shape3 {
+    width: 200px;
+    height: 200px;
+    bottom: 50%;
+    left: 30%;
+    background: #30f0a0;
+    animation-duration: 20s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-50px) translateX(50px) rotate(180deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+}

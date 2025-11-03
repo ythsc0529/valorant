@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant 隨便你網站</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="update-modal" class="modal-overlay show">
+        <div class="modal-content glass">
+            <span class="modal-close" id="close-modal">&times;</span>
+            <h2>🚀 網站更新報 (beta 1.0)</h2>
+            <p>歡迎來到 Valorant 隨便你網站！</p>
+            <ul>
+                <li>網站正式上線！</li>
+                <li>娛樂區功能開放：隨機特務、武器、事件、地圖。</li>
+                <li>電腦分隊功能開放：支援 2-10 人自動分隊。</li>
+                <li>液態玻璃風格介面實裝。</li>
+            </ul>
+            <button id="modal-confirm-btn">我瞭解了</button>
+        </div>
+    </div>
+
+    <nav class="glass">
+        <div class="logo">Valorant 隨便你</div>
+        <ul>
+            <li><a href="#entertainment" class="nav-link">娛樂區</a></li>
+            <li><a href="#team-splitter" class="nav-link">電腦分隊</a></li>
+            <li><a href="#news" class="nav-link">特戰新聞</a></li>
+            <li><a href="#esports" class="nav-link">職業賽事</a></li>
+            <li><a href="#guides" class="nav-link">攻略</a></li>
+            <li><a href="#minigames" class="nav-link">小遊戲</a></li>
+            <li><a href="#about" class="nav-link">關於我們</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="entertainment" class="page-section active">
+            <h2>🎲 娛樂區</h2>
+            <div class="entertainment-grid">
+                <div class="tool-card glass">
+                    <h3>隨機特務</h3>
+                    <p id="agent-result">點擊按鈕抽取</p>
+                    <button id="random-agent-btn">抽取特務</button>
+                </div>
+                <div class="tool-card glass">
+                    <h3>隨機武器</h3>
+                    <p id="weapon-result">點擊按鈕抽取</p>
+                    <button id="random-weapon-btn">抽取武器</button>
+                </div>
+                <div class="tool-card glass">
+                    <h3>隨機事件</h3>
+                    <p id="event-result">點擊按鈕抽取</p>
+                    <button id="random-event-btn">抽取事件</button>
+                </div>
+                <div class="tool-card glass">
+                    <h3>隨機地圖</h3>
+                    <p id="map-result">點擊按鈕抽取</p>
+                    <button id="random-map-btn">抽取地圖</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="team-splitter" class="page-section">
+            <h2>🧑‍🤝‍🧑 電腦分隊</h2>
+            <div class="splitter-container glass">
+                <div class="splitter-input">
+                    <h3>輸入玩家名稱 (2-10人)</h3>
+                    <p>每行輸入一個名稱：</p>
+                    <textarea id="player-names" rows="10" placeholder="玩家1&#10;玩家2&#10;玩家3..."></textarea>
+                    <button id="split-teams-btn">開始分隊</button>
+                    <p id="splitter-error"></p>
+                </div>
+                <div class="splitter-results">
+                    <div class="team-card glass">
+                        <h3>A 隊</h3>
+                        <ul id="team-a"></ul>
+                    </div>
+                    <div class="team-card glass">
+                        <h3>B 隊</h3>
+                        <ul id="team-b"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="page-section">
+            <h2 class="coming-soon">敬請期待</h2>
+            <p>特戰新聞區即將上線！</p>
+        </section>
+
+        <section id="esports" class="page-section">
+            <h2 class="coming-soon">敬請期待</h2>
+            <p>職業賽事報導與賽程即將上線！</p>
+        </section>
+
+        <section id="guides" class="page-section">
+            <h2 class="coming-soon">敬請期待</h2>
+            <p>最新的特務與地圖攻略即將上線！</p>
+        </section>
+
+        <section id="minigames" class="page-section">
+            <h2 class="coming-soon">敬請期待</h2>
+            <p>Valorant 相關小遊戲即將上線！</p>
+        </section>
+
+        <section id="about" class="page-section">
+            <h2>👋 關於我們</h2>
+            <div class="about-content glass">
+                <p>本網站是由**「隨便你工作室」**的熱情玩家所設計。</p>
+                <p>我們和您一樣，熱愛《特戰英豪》這款遊戲的戰術深度、精準槍法以及那些和朋友們「E-Bot」的歡樂時光。創立這個網站的初衷，是希望能為繁體中文社群提供一個有趣、實用且充滿歡笑的聚集地。</p>
+                <p>無論您是想在「娛樂區」找點樂子、用「電腦分隊」解決誰跟誰一隊的煩惱，或是未來想在這裡找到最新的遊戲資訊，我們都希望能陪伴您在 Valorant 的每一場對戰。</p>
+                <p>這個網站是為愛而生，我們還有很多瘋狂的點子正在路上。感謝您的造訪！</p>
+                <hr>
+                <h3>聯絡我們</h3>
+                <p>如果您有任何建議、合作洽談或發現 Bug，請隨時透過 Email 與我們聯繫：</p>
+                <p><strong><a href="mailto:hsc0529.myself.tw@gmail.com">hsc0529.myself.tw@gmail.com</a></strong></p>
+            </div>
+        </section>
+    </main>
+
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
