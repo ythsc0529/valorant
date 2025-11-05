@@ -545,4 +545,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 初始化渲染
     renderMiniGames();
+
+
+    // 行動版漢堡選單邏輯
+    const mobileToggle = document.getElementById('mobile-nav-toggle');
+    const navElement = document.querySelector('nav.glass');
+
+    if (mobileToggle && navElement) {
+        mobileToggle.addEventListener('click', () => {
+            navElement.classList.toggle('mobile-open');
+        });
+
+        // 點擊導覽連結時收合（行動裝置友善）
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navElement.classList.contains('mobile-open')) {
+                    navElement.classList.remove('mobile-open');
+                }
+            });
+        });
+
+        // 視窗縮放到桌面尺寸時確保收合
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && navElement.classList.contains('mobile-open')) {
+                navElement.classList.remove('mobile-open');
+            }
+        });
+    }
 });
