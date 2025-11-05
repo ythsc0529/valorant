@@ -166,4 +166,37 @@ document.addEventListener('DOMContentLoaded', () => {
             teamB_UI.appendChild(li);
         });
     });
+
+
+    // --- esports 分頁切換 ---
+    const esportsTabBtns = document.querySelectorAll('.esports-tabs .tab-btn');
+    const esportsPanels = document.querySelectorAll('.esports-panel');
+
+    if (esportsTabBtns.length) {
+        esportsTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 切換按鈕樣式
+                esportsTabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // 顯示對應 panel
+                const target = btn.getAttribute('data-tab');
+                esportsPanels.forEach(p => {
+                    if (p.id === target) {
+                        p.classList.add('active');
+                        p.setAttribute('aria-hidden', 'false');
+                    } else {
+                        p.classList.remove('active');
+                        p.setAttribute('aria-hidden', 'true');
+                    }
+                });
+
+                // 確保視圖滾動到 esports 區塊（在 SPA 模式下）
+                const esportsSection = document.getElementById('esports');
+                if (esportsSection) {
+                    esportsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    }
 });

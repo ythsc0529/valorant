@@ -166,8 +166,59 @@
         </section>
 
         <section id="esports" class="page-section">
-            <h2 class="coming-soon">敬請期待</h2>
-            <p>職業賽事報導與賽程即將上線！</p>
+            <div class="esports-header glass">
+                <h2>🏆 職業賽事</h2>
+                <div class="esports-tabs" role="tablist" aria-label="職業賽事分頁">
+                    <button class="tab-btn active" data-tab="esports-news" role="tab">職業新聞</button>
+                    <button class="tab-btn" data-tab="esports-schedule" role="tab">今日賽程</button>
+                </div>
+            </div>
+
+            <div id="esports-news" class="esports-panel glass active" role="tabpanel">
+                <article class="esports-article">
+                    <header>
+                        <h3>2026 亞太地區 VCT 挑戰賽更新</h3>
+                        <div class="meta">
+                            <span class="author">VALORANT Esports Staff</span>
+                            <time datetime="2025-10-24">2025年10月24日</time>
+                        </div>
+                    </header>
+
+                    <p class="lead">繼續閱讀，了解 2026 亞太地區 VCT 挑戰賽即將迎來的重大變革。 我們近期公布了挑戰賽通往 Champions 之路，將為挑戰賽帶來重大變革。</p>
+
+                    <section>
+                        <h4>要點摘要</h4>
+                        <ul>
+                            <li>挑戰賽隊伍未來不再透過晉級賽取得資格，將有機會直通國際聯賽第二階段季後賽（通往 Champions）。</li>
+                            <li>每個國際聯賽將提供 4 個名額給挑戰賽隊伍；亞太地區名額分配包含東南亞、日本、韓國冠軍直通名額，第四個名額透過最終資格賽決定。</li>
+                            <li>成功晉級第二階段季後賽的隊伍將獲得 75,000 美元補助金。</li>
+                            <li>學院隊仍可參賽，但無法晉級第二階段季後賽；2026 年將取消學院隊降級保護。</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>東南亞挑戰賽調整</h4>
+                        <p>東南亞挑戰賽將改採錦標賽模式，由一系列本地賽事組成，最終匯集到跨區比賽，分為兩個賽季進行。資格賽將從本地層級開始，隊伍透過公開資格晉級，本地資格前兩名將進入 12 隊錦標賽制的東南亞挑戰賽。</p>
+                        <p>我們將為泰國、印尼、越南和菲律賓舉辦 5 場本地資格賽；最後一場資格賽由其他東南亞地區隊伍參加。選手也可透過 Premier 賽事晉升，無居住地限制。</p>
+                    </section>
+
+                    <section>
+                        <h4>關於直播與代表性</h4>
+                        <p>為提升本地代表性與觀眾體驗，我們將取消東南亞挑戰賽的獨家直播限制，並與本地合作夥伴合作提供本地語言轉播。</p>
+                    </section>
+
+                    <footer>
+                        <p>感謝大家在改革期間持續的支持，期待明年一同見證挑戰賽隊伍在 VCT 太平洋賽區第二階段季後賽掀起的新局。</p>
+                    </footer>
+                </article>
+            </div>
+
+            <div id="esports-schedule" class="esports-panel glass" role="tabpanel" aria-hidden="true">
+                <div class="schedule-placeholder">
+                    <h3>今日賽程（佔位）</h3>
+                    <p>今日賽程區域開放 — 資料與直播排程即將整合，上線後會自動顯示對戰時間及轉播連結。</p>
+                </div>
+            </div>
         </section>
 
         <section id="guides" class="page-section">
