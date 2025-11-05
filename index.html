@@ -11,13 +11,13 @@
     <div id="update-modal" class="modal-overlay show">
         <div class="modal-content glass">
             <span class="modal-close" id="close-modal">&times;</span>
-            <h2>🚀 網站更新報 (beta 1.0)</h2>
+            <h2>🚀 網站更新報 (beta 2.0)</h2>
             <p>歡迎來到 Valorant 隨便你網站！</p>
             <ul>
                 <li>網站正式上線！</li>
-                <li>娛樂區功能開放：隨機特務、武器、事件、地圖。</li>
-                <li>電腦分隊功能開放：支援 2-10 人自動分隊。</li>
-                <li>液態玻璃風格介面實裝。</li>
+                <li>特戰新聞功能正式上線</li>
+                <li>更正部分系統動畫未顯示bug。</li>
+                <li>改善部分場景液態玻璃未正常顯示錯誤。</li>
             </ul>
             <button id="modal-confirm-btn">我瞭解了</button>
         </div>
@@ -87,8 +87,82 @@
         </section>
 
         <section id="news" class="page-section">
-            <h2 class="coming-soon">敬請期待</h2>
-            <p>特戰新聞區即將上線！</p>
+            <article class="news-article glass">
+                <header>
+                    <h1>《特戰英豪》11.09 版本更新公告</h1>
+                    <div class="news-meta">
+                        <span class="news-author">作者：Ashley Tsao</span>
+                        <time datetime="2025-10-28" class="news-date">2025/10/28</time>
+                        <span class="news-type">遊戲更新</span>
+                    </div>
+                </header>
+
+                <p class="lead">大家好，我是 Ash！這次推出了幾項重要的更新，改善遊戲體驗與代打／開小號問題，並對互動物件與特務細節進行修正與優化，請務必詳閱變更內容。</p>
+
+                <h3>懶人包</h3>
+                <ul class="news-list">
+                    <li>共享帳號必須啟用多重驗證 (MFA) 才能遊玩競技對戰</li>
+                    <li>互動物件與技能細節改良，操作更直覺</li>
+                    <li>多項地圖與特務錯誤修正</li>
+                </ul>
+
+                <section class="news-section">
+                    <h3>重要宣告</h3>
+                    <p>我們持續提升外掛與代打偵測系統，已封禁大量違規帳號。對於被偵測出代打或嚴重違反購買小號政策的帳號，從本版本開始將採取封禁處分。</p>
+                </section>
+
+                <section class="news-section">
+                    <h3>所有平台 — 競技模式更新</h3>
+                    <p>自 11.09 起，在北美、拉丁、美洲（巴西）與韓國等地區，偵測到共享帳號的情況必須啟用 Riot Mobile 多重驗證 (MFA) 才能進入競技對戰。其他對戰模式則不受此限制。</p>
+                    <p>如遇到疑似開小號或操縱牌階的玩家，請使用檢舉功能檢舉「操縱牌階」，每次檢舉都能協助偵測機制進步。</p>
+                </section>
+
+                <section class="news-section">
+                    <h3>遊戲系統更新</h3>
+                    <p>此次更新對互動物件進行多項細微改良，改善「使用物件」(PC 為按 F、主機為方塊/X) 的一致性：</p>
+                    <ul class="news-list">
+                        <li>互動物件醒目顯示：開關、繩索、滑索及大型互動物件採用統一的綠色醒目提示。</li>
+                        <li>互動物品優先順序：可透過瞄準優先選取同一區域的多個互動物件，提升操作精準度。</li>
+                    </ul>
+                </section>
+
+                <section class="news-section">
+                    <h3>錯誤修正 — 地圖</h3>
+                    <ul class="news-list">
+                        <li><strong>深海遺珠：</strong>修正某些模式下 B 點一個木箱未產生碰撞的問題。</li>
+                        <li><strong>熱帶樂園：</strong>修正可穿牆破壞戰術工具的地形漏洞。</li>
+                        <li><strong>深窟幽境：</strong>修正蒂羅重力網於特定位置造成瞬移特務被立即殲滅的問題。</li>
+                        <li><strong>晶蝕之地：</strong>調整 A 點某區域，避免部分特務意外進入其他地點上方之空間問題。</li>
+                    </ul>
+                </section>
+
+                <section class="news-section">
+                    <h3>錯誤修正 — 特務</h3>
+                    <ul class="news-list">
+                        <li><strong>亞星卓：</strong>復活時使用的星辰現已正確播放啟動音效。</li>
+                        <li><strong>蓋克：</strong>震翼鳥人在拆除輻能核心時未播放動畫已修正；蓋克與愷宙的拘束視覺特效從薄門牆透出演出問題已修正。</li>
+                        <li><strong>離索：</strong>觀戰模式下決滅技能視覺放大問題已修正。</li>
+                        <li><strong>歐門：</strong>夢魘侵襲圖示縮小以避免蓋住小地圖。</li>
+                        <li><strong>蕾娜：</strong>修正無上女皇有時未計入「使用大絕技能」任務進度的問題。</li>
+                        <li><strong>絲凱：</strong>引導之鷹裝備後立即解除裝備導致視覺特效懸停問題已修正。</li>
+                        <li><strong>聖祈：</strong>治療靈球不會再鎖定已中毒但滿血玩家。</li>
+                        <li><strong>維托：</strong>穿越之徑漩渦半徑指示與實際放置不符問題、視覺突變、技能描述不符及相關動畫/任務計入問題皆已修正。</li>
+                        <li><strong>薇蝮：</strong>蛇咬毒液視覺淡出時間不一致以及蝮蛇領域懸停問題已修正。</li>
+                        <li><strong>薇絲：</strong>陣亡或荊棘鐵網失效時外觀缺少下半部問題已修正。</li>
+                        <li><strong>夜戮：</strong>聲東擊西分身可被致命技能摧毀與分身碰撞判定問題已修正。</li>
+                        <li><strong>多名特務：</strong>暈眩視覺特效從薄門牆透出與壓制音效結束未停止等問題已修正。</li>
+                    </ul>
+                </section>
+
+                <section class="news-section">
+                    <h3>僅限家用主機版 — 錯誤修正</h3>
+                    <p>修正部分情況下使用布史東等技能時游標無法移動的罕見問題。</p>
+                </section>
+
+                <footer class="news-footer">
+                    <p>感謝各位玩家與社群提供回報與意見，我們會持續追蹤與優化。若需設定多重驗證或了解更多變更原因，請參考官方公告與設定指南。</p>
+                </footer>
+            </article>
         </section>
 
         <section id="esports" class="page-section">

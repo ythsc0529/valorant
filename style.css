@@ -244,6 +244,56 @@ textarea {
     margin: 2rem 0;
 }
 
+/* 新聞文章樣式 */
+.news-article {
+    padding: 1.5rem;
+    line-height: 1.65;
+}
+
+.news-article header h1 {
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.news-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.news-article .lead {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.news-section {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.news-list {
+    padding-left: 1.25rem;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.news-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* 簡單分隔與尾註 */
+.news-footer {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+}
+
 /* 敬請期待 */
 .coming-soon {
     font-size: 3rem;
