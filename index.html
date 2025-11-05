@@ -11,13 +11,14 @@
     <div id="update-modal" class="modal-overlay show">
         <div class="modal-content glass">
             <span class="modal-close" id="close-modal">&times;</span>
-            <h2>🚀 網站更新報 (beta 2.0)</h2>
+            <h2>🚀 網站更新報 (beta 4.0)</h2>
             <p>歡迎來到 Valorant 隨便你網站！</p>
             <ul>
                 <li>網站正式上線！</li>
-                <li>特戰新聞功能正式上線</li>
+                <li>小遊戲功能正式上線</li>
                 <li>更正部分系統動畫未顯示bug。</li>
                 <li>改善部分場景液態玻璃未正常顯示錯誤。</li>
+                <li>部分小遊戲尚未實裝</li>
             </ul>
             <button id="modal-confirm-btn">我瞭解了</button>
         </div>
@@ -227,8 +228,22 @@
         </section>
 
         <section id="minigames" class="page-section">
-            <h2 class="coming-soon">敬請期待</h2>
-            <p>Valorant 相關小遊戲即將上線！</p>
+            <h2>🎮 小遊戲</h2>
+            <p>以下為初期設計的 5 款特戰小遊戲，點選「開始遊戲」查看詳情或立即體驗可玩的範例。</p>
+
+            <div id="minigames-grid" class="minigames-grid">
+                <!-- Cards 由 script.js 動態產生 -->
+            </div>
+
+            <!-- 遊戲詳情 / 啟動 Modal -->
+            <div id="game-modal" class="game-modal" aria-hidden="true">
+                <div class="game-modal-content glass">
+                    <button id="game-modal-close" class="modal-close">×</button>
+                    <div id="game-modal-body">
+                        <!-- 由 script.js 填入遊戲說明或互動 UI -->
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="about" class="page-section">

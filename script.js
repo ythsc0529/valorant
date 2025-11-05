@@ -199,4 +199,350 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+
+    // 小遊戲清單與互動
+    const miniGames = [
+        {
+            id: 'reaction-rush',
+            title: '反應測試：Reaction Rush',
+            desc: '測量你的反應速度。等待畫面變綠後，盡快點擊方塊。會顯示反應時間（ms）。',
+            playable: true
+        },
+        {
+            id: 'aim-trainer',
+            title: 'AIM 訓練：Aim Lab Lite',
+            desc: '30 秒內點擊盡可能多的靶心，測試精準與速度，結束後會顯示命中、每秒命中數與與一般人 / 職業選手比較。',
+            playable: true
+        },
+        {
+            id: 'spike-defuse',
+            title: '爆彈拆解模擬：Spike Defuse Rush',
+            desc: '模擬拆除 Spike 的快節奏挑戰。限時判定分數，強調協作與時機（暫為說明/未實作）。',
+            playable: false
+        },
+        {
+            id: 'agent-matchup',
+            title: '特務配對小考：Agent Matchup Quiz',
+            desc: '題目以特務技能互動、克制關係為主，測驗戰術理解力（暫為說明/未實作）。',
+            playable: false
+        },
+        {
+            id: 'map-callout',
+            title: '地圖標記競賽：Map Callout Race',
+            desc: '在指定地圖上快速標註正確點位，測試地圖意識與溝通（暫為說明/未實作）。',
+            playable: false
+        }
+    ];
+
+    const minigamesGrid = document.getElementById('minigames-grid');
+    const gameModal = document.getElementById('game-modal');
+    const gameModalBody = document.getElementById('game-modal-body');
+    const gameModalClose = document.getElementById('game-modal-close');
+
+    function renderMiniGames() {
+        minigamesGrid.innerHTML = '';
+        miniGames.forEach(g => {
+            const card = document.createElement('div');
+            card.className = 'game-card glass';
+            card.innerHTML = `
+                <h4>${g.title}</h4>
+                <p>${g.desc}</p>
+                <div class="game-actions">
+                    <button class="reaction-btn" data-game="${g.id}">${g.playable ? '開始遊戲' : '查看說明'}</button>
+                </div>
+            `;
+            minigamesGrid.appendChild(card);
+        });
+    }
+
+    function openGameModal(gameId) {
+        const game = miniGames.find(x => x.id === gameId);
+        if (!game) return;
+        gameModalBody.innerHTML = ''; // 清空
+        if (gameId === 'reaction-rush') {
+            // 注入可玩的反應測試 UI
+            gameModalBody.innerHTML = `
+                <h3>${game.title}</h3>
+                <p>${game.desc}</p>
+                <div class="reaction-game">
+                    <div id="reaction-box" class="reaction-box ready">點擊「開始」準備</div>
+                    <div>
+                        <button id="reaction-start" class="reaction-btn">開始</button>
+                        <button id="reaction-reset" class="reaction-btn" style="background:#888;margin-left:8px;">重置</button>
+                    </div>
+                    <div class="reaction-result" id="reaction-result">尚未測試</div>
+                </div>
+            `;
+            // 綁定反應測試邏輯
+            initReactionGame();
+        } else if (gameId === 'aim-trainer') {
+            // 注入 AIM 訓練 UI
+            gameModalBody.innerHTML = `
+                <h3>${game.title}</h3>
+                <p>${game.desc}</p>
+                <div class="aim-game">
+                    <div class="aim-controls" style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                        <button id="aim-start" class="reaction-btn">開始 (30s)</button>
+                        <button id="aim-stop" class="reaction-btn" style="background:#888;">停止</button>
+                        <div id="aim-timer" style="margin-left:8px;color:rgba(255,255,255,0.9);font-weight:700;">時間：30s</div>
+                    </div>
+                    <div id="aim-area" class="aim-area"></div>
+                    <div class="aim-stats" style="margin-top:12px;">
+                        <div>命中：<span id="aim-hits">0</span></div>
+                        <div>未命中：<span id="aim-misses">0</span></div>
+                        <div>每秒命中 (HPS)：<span id="aim-hps">0.00</span></div>
+                        <div id="aim-comparison" style="margin-top:6px;color:rgba(255,255,255,0.9);font-weight:700;"></div>
+                    </div>
+                </div>
+            `;
+            initAimTrainer();
+        } else {
+            // 顯示說明文本（暫未實作）
+            gameModalBody.innerHTML = `
+                <h3>${game.title}</h3>
+                <p>${game.desc}</p>
+                <p style="color:rgba(255,255,255,0.8);">此遊戲尚在開發中，後續會補上可玩的版本與排行榜功能。</p>
+            `;
+        }
+        gameModal.setAttribute('aria-hidden', 'false');
+    }
+
+    // 修改 closeGameModal: 呼叫可能的 cleanup（由各遊戲設定）
+    function closeGameModal() {
+        // 若有遊戲專屬清理函式，呼叫它
+        if (gameModal._cleanup && typeof gameModal._cleanup === 'function') {
+            try { gameModal._cleanup(); } catch (err) { /* ignore */ }
+            delete gameModal._cleanup;
+        }
+        gameModal.setAttribute('aria-hidden', 'true');
+        gameModalBody.innerHTML = '';
+    }
+
+    /* 反應測試實作 */
+    function initReactionGame() {
+        const box = document.getElementById('reaction-box');
+        const startBtn = document.getElementById('reaction-start');
+        const resetBtn = document.getElementById('reaction-reset');
+        const resultEl = document.getElementById('reaction-result');
+
+        let timeoutId = null;
+        let startTime = 0;
+        let state = 'idle'; // idle, waiting, go
+
+        function setBoxState(cls, text) {
+            box.className = 'reaction-box ' + cls;
+            box.textContent = text;
+        }
+
+        function startSequence() {
+            if (state === 'waiting') return;
+            setBoxState('wait', '請等待……');
+            state = 'waiting';
+            resultEl.textContent = '等待中…';
+            const delay = 800 + Math.random() * 2000; // 0.8s ~ 2.8s
+            timeoutId = setTimeout(() => {
+                setBoxState('go', '現在！點擊我！');
+                startTime = performance.now();
+                state = 'go';
+            }, delay);
+        }
+
+        function resetSequence() {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+            state = 'idle';
+            setBoxState('ready', '點擊「開始」準備');
+            resultEl.textContent = '尚未測試';
+        }
+
+        function handleClick() {
+            if (state === 'go') {
+                const reaction = Math.round(performance.now() - startTime);
+                // 比較基準（ms）
+                const avg = 250; // 一般人中位反應時間
+                const pro = 150; // 職業選手中位反應時間
+                const diffAvg = avg - reaction;
+                const diffPro = reaction - pro;
+                const cmpAvg = reaction <= avg ? `比一般人快 ${Math.abs(diffAvg)} ms` : `比一般人慢 ${Math.abs(diffAvg)} ms`;
+                const cmpPro = reaction <= pro ? `比職業選手快 ${Math.abs(diffPro)} ms` : `比職業選手慢 ${Math.abs(diffPro)} ms`;
+                // 建立結果字串
+                resultEl.innerHTML = `你的反應： <strong>${reaction} ms</strong><br><span style="color:rgba(255,255,255,0.9);">${cmpAvg} — ${cmpPro}</span>`;
+                setBoxState('ready', `完成：${reaction} ms`);
+                state = 'idle';
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            } else if (state === 'waiting') {
+                // 太早點擊
+                clearTimeout(timeoutId);
+                timeoutId = null;
+                state = 'idle';
+                resultEl.textContent = '太早了！請重試。';
+                setBoxState('ready', '太早點擊 - 重置');
+            } else {
+                // idle：點擊箱子無效，提示點開始
+                resultEl.textContent = '請按「開始」開始測試。';
+            }
+        }
+
+        box.addEventListener('click', handleClick);
+        startBtn.addEventListener('click', startSequence);
+        resetBtn.addEventListener('click', resetSequence);
+        // 初始化顯示
+        resetSequence();
+    }
+
+    /* Aim Trainer 實作（簡易版） */
+    function initAimTrainer() {
+        const area = document.getElementById('aim-area');
+        const startBtn = document.getElementById('aim-start');
+        const stopBtn = document.getElementById('aim-stop');
+        const timerEl = document.getElementById('aim-timer');
+        const hitsEl = document.getElementById('aim-hits');
+        const missesEl = document.getElementById('aim-misses');
+        const hpsEl = document.getElementById('aim-hps');
+        const cmpEl = document.getElementById('aim-comparison');
+
+        // 變數
+        let hits = 0;
+        let misses = 0;
+        let running = false;
+        let timeLeft = 30;
+        let intervalId = null;
+        let targetEl = null;
+
+        // 參考標準 (HPS)
+        const avgHPS = 1.5; // 一般人每秒命中平均值（示意）
+        const proHPS = 3.0; // 職業選手每秒命中平均值（示意）
+
+        // 建立目標
+        function spawnTarget() {
+            removeTarget();
+            const rect = area.getBoundingClientRect();
+            const size = 42;
+            const x = Math.random() * Math.max(0, rect.width - size);
+            const y = Math.random() * Math.max(0, rect.height - size);
+            const t = document.createElement('div');
+            t.className = 'target';
+            t.style.width = size + 'px';
+            t.style.height = size + 'px';
+            t.style.left = x + 'px';
+            t.style.top = y + 'px';
+            t.style.position = 'absolute';
+            t.style.borderRadius = '50%';
+            t.style.background = 'var(--primary-color)';
+            t.style.boxShadow = '0 4px 10px rgba(0,0,0,0.4)';
+            t.style.cursor = 'pointer';
+            t.dataset.spawned = Date.now();
+            t.addEventListener('click', onTargetClick);
+            area.appendChild(t);
+            targetEl = t;
+        }
+
+        function removeTarget() {
+            if (targetEl && targetEl.parentNode) {
+                targetEl.removeEventListener('click', onTargetClick);
+                targetEl.parentNode.removeChild(targetEl);
+                targetEl = null;
+            }
+        }
+
+        function onTargetClick(e) {
+            e.stopPropagation();
+            if (!running) return;
+            hits++;
+            hitsEl.textContent = hits;
+            spawnTarget();
+        }
+
+        function onAreaClick(e) {
+            // 點擊到空白視為未命中
+            if (!running) return;
+            if (e.target === area) {
+                misses++;
+                missesEl.textContent = misses;
+            }
+        }
+
+        function startGame() {
+            if (running) return;
+            // reset
+            hits = 0; misses = 0; timeLeft = 30;
+            hitsEl.textContent = '0';
+            missesEl.textContent = '0';
+            hpsEl.textContent = '0.00';
+            cmpEl.textContent = '';
+            running = true;
+            timerEl.textContent = `時間：${timeLeft}s`;
+            spawnTarget();
+            intervalId = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = `時間：${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            running = false;
+            clearInterval(intervalId);
+            intervalId = null;
+            removeTarget();
+            const duration = 30;
+            const hps = hits / duration;
+            hpsEl.textContent = hps.toFixed(2);
+            // 比較文字
+            const diffAvg = hps - avgHPS;
+            const diffPro = hps - proHPS;
+            const cmpAvg = diffAvg >= 0 ? `高於一般人 ${diffAvg.toFixed(2)} HPS` : `低於一般人 ${Math.abs(diffAvg).toFixed(2)} HPS`;
+            const cmpPro = diffPro >= 0 ? `高於職業選手 ${diffPro.toFixed(2)} HPS` : `低於職業選手 ${Math.abs(diffPro).toFixed(2)} HPS`;
+            cmpEl.textContent = `比較：${cmpAvg} — ${cmpPro}`;
+        }
+
+        function stopGame() {
+            if (!running) return;
+            running = false;
+            clearInterval(intervalId);
+            intervalId = null;
+            removeTarget();
+        }
+
+        // Cleanup function - 儲存到 modal 以便關閉時呼叫
+        function cleanup() {
+            stopGame();
+            area.removeEventListener('click', onAreaClick);
+        }
+        gameModal._cleanup = cleanup;
+
+        // 綁定事件
+        area.addEventListener('click', onAreaClick);
+        startBtn.addEventListener('click', startGame);
+        stopBtn.addEventListener('click', stopGame);
+
+        // 初始化顯示：建立空白 area 高度
+        area.style.minHeight = '320px';
+        area.style.position = 'relative';
+        area.innerHTML = ''; // clear
+        hitsEl.textContent = '0';
+        missesEl.textContent = '0';
+        hpsEl.textContent = '0.00';
+        cmpEl.textContent = '';
+    }
+
+    // 事件委派：點擊按鈕開啟 Modal
+    minigamesGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-game]');
+        if (!btn) return;
+        const gameId = btn.getAttribute('data-game');
+        openGameModal(gameId);
+    });
+
+    gameModalClose.addEventListener('click', closeGameModal);
+    gameModal.addEventListener('click', (e) => {
+        if (e.target === gameModal) closeGameModal();
+    });
+
+    // 初始化渲染
+    renderMiniGames();
 });
