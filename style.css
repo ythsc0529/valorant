@@ -656,29 +656,40 @@ textarea {
         gap: 6px;
     }
 
-    /* 隱藏桌面版選單，改為漢堡展開 */
+    /* 隱藏桌面版選單，改為漢堡展開
+       改為使用毛玻璃：半透明背景 + backdrop-filter */
     .nav-menu {
         position: fixed;
         top: 56px; /* 導覽列高度 */
         right: 0;
-        background: linear-gradient(180deg, rgba(15,25,35,0.96), rgba(10,15,20,0.98));
         width: 80%;
         max-width: 320px;
         height: calc(100% - 56px);
         transform: translateX(100%);
-        transition: transform 0.28s ease;
+        transition: transform 0.28s ease, opacity 0.28s ease;
         display: flex;
         flex-direction: column;
         padding: 1rem;
         gap: 1rem;
         z-index: 1200;
         border-radius: 0 0 0 8px;
-        border-left: 1px solid rgba(255,255,255,0.03);
+
+        /* 毛玻璃樣式 */
+        background: rgba(18, 20, 28, 0.55); /* 深色半透明，提升對比 */
+        backdrop-filter: blur(10px) saturate(120%);
+        -webkit-backdrop-filter: blur(10px) saturate(120%);
+        border-left: 1px solid rgba(255,255,255,0.06);
+        box-shadow: -8px 24px 40px rgba(2,4,10,0.6);
+        color: var(--text-color);
+        opacity: 0;
+        pointer-events: none;
     }
 
     /* 打開時顯示 */
     nav.mobile-open .nav-menu {
         transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
     }
 
     /* nav 連結樣式調整 */
@@ -691,6 +702,9 @@ textarea {
         padding: 0.75rem 0.5rem;
         font-size: 1rem;
         border-radius: 6px;
+        /* 加強對比與可讀性 */
+        color: var(--text-color);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.6);
     }
 
     nav .nav-menu li a:hover,
