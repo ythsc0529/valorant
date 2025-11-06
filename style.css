@@ -656,15 +656,20 @@ textarea {
         gap: 6px;
     }
 
-    /* 隱藏桌面版選單，改為漢堡展開 */
+    /* 隱藏桌面版選單，改為漢堡展開 (新增 glassmorphism 背景以提升可讀性) */
     .nav-menu {
         position: fixed;
         top: 56px;
         right: 0;
-        background: rgba(30, 30, 46, 0.85);
+        /* 使用變數作為主要 glass 背景，並提供較深的 fallback 以維持對比 */
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        /* 若欲回退到單色，可使用下面一行作為 fallback（已保留註解） */
+        /* background: rgba(30, 30, 46, 0.85); */
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border-color);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+        color: var(--text-color); /* 確保文字顏色使用全域變數 */
         width: 80%;
         max-width: 320px;
         height: calc(100% - 56px);
