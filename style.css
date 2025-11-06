@@ -656,8 +656,7 @@ textarea {
         gap: 6px;
     }
 
-    /* 隱藏桌面版選單，改為漢堡展開
-       改為使用毛玻璃：半透明背景 + backdrop-filter */
+    /* 隱藏桌面版選單，改為漢堡展開（加入液態玻璃效果） */
     .nav-menu {
         position: fixed;
         top: 56px; /* 導覽列高度 */
@@ -666,30 +665,27 @@ textarea {
         max-width: 320px;
         height: calc(100% - 56px);
         transform: translateX(100%);
-        transition: transform 0.28s ease, opacity 0.28s ease;
+        transition: transform 0.28s ease;
         display: flex;
         flex-direction: column;
         padding: 1rem;
         gap: 1rem;
         z-index: 1200;
-        border-radius: 0 0 0 8px;
-
-        /* 毛玻璃樣式 */
-        background: rgba(18, 20, 28, 0.55); /* 深色半透明，提升對比 */
-        backdrop-filter: blur(10px) saturate(120%);
-        -webkit-backdrop-filter: blur(10px) saturate(120%);
-        border-left: 1px solid rgba(255,255,255,0.06);
-        box-shadow: -8px 24px 40px rgba(2,4,10,0.6);
-        color: var(--text-color);
-        opacity: 0;
-        pointer-events: none;
+        border-radius: 0 0 0 12px;
+        /* 液態玻璃主體 */
+        background: rgba(255,255,255,0.04); /* 半透明基底，讓 backdrop-filter 可見 */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-left: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        /* 若想保留微幅漸層，可用混合色遮罩覆蓋 */
+        background-image: linear-gradient(180deg, rgba(15,25,35,0.18), rgba(10,15,20,0.12));
+        background-blend-mode: overlay;
     }
 
     /* 打開時顯示 */
     nav.mobile-open .nav-menu {
         transform: translateX(0);
-        opacity: 1;
-        pointer-events: auto;
     }
 
     /* nav 連結樣式調整 */
@@ -702,8 +698,8 @@ textarea {
         padding: 0.75rem 0.5rem;
         font-size: 1rem;
         border-radius: 6px;
-        /* 加強對比與可讀性 */
         color: var(--text-color);
+        /* 增加輕微文字陰影，提升與底圖對比 */
         text-shadow: 0 1px 2px rgba(0,0,0,0.6);
     }
 
